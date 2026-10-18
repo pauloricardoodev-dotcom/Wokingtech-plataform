@@ -13,14 +13,26 @@ export default function Header() {
           <h1 className="font-display text-2xl leading-tight sm:text-3xl">Gerador de Backgrounds</h1>
         </div>
 
-        {/* O zip fica em public/assets: o atributo download faz o navegador baixar em vez de abrir */}
-        <a
-          href="/assets/img.zip"
-          download="assets-workshop.zip"
-          className="self-start rounded-full border-2 border-wt-lime px-6 py-2.5 font-display text-sm text-wt-lime transition hover:bg-wt-lime hover:text-wt-ink sm:self-auto"
-        >
-          Baixar assets
-        </a>
+        <div className="flex flex-wrap gap-3 self-start sm:self-auto">
+          {/* Código do workshop: target="_blank" abre em nova aba, rel="noopener" por segurança */}
+          <a
+            href="https://github.com/PaulinDevendo/Workingtech-2026"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-full border-2 border-wt-lime px-6 py-2.5 font-display text-sm text-wt-lime transition hover:bg-wt-lime hover:text-wt-ink"
+          >
+            Ver código no GitHub
+          </a>
+
+          {/* O zip fica em public/assets: o atributo download faz o navegador baixar em vez de abrir */}
+          <a
+            href="/assets/img.zip"
+            download="assets-workshop.zip"
+            className="rounded-full border-2 border-wt-lime px-6 py-2.5 font-display text-sm text-wt-lime transition hover:bg-wt-lime hover:text-wt-ink"
+          >
+            Baixar assets
+          </a>
+        </div>
       </div>
     </header>
   )
