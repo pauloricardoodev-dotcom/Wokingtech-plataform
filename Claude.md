@@ -73,7 +73,7 @@ Download em PNG 1920×1080.
 Pronto quando: baixo o PNG e ele abre igual ao preview.
 Fase 3 — Deploy
 Deploy do front na Vercel.
-Pronto quando: abro o link no celular e no computador e consigo gerar e baixar.
+Pronto quando: abro o link no celular e no computador e consigo gerar e baixar no computador (no celular o gerador fica escondido, com um aviso).
 Fase 4 — IA (opcional, só se sobrar tempo)
 Campo "descreva o que você quer" (ex: "ondas calmas tipo oceano").
 Um endpoint de back (Nest ou serverless) chama a API do Claude (modelo claude-haiku-5-5) e devolve somente uma config JSON válida para o gerador (estilo, hue, intensity, softness, textArea).

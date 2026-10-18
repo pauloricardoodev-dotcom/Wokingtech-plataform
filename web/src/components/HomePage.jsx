@@ -1,3 +1,4 @@
+import AvisoComputador from './AvisoComputador.jsx'
 import Footer from './Footer.jsx'
 import Navbar from './Navbar.jsx'
 
@@ -78,11 +79,13 @@ export default function HomePage() {
               </a>
               <a
                 href="/gerador.html"
-                className="rounded-full border-2 border-wt-lime px-7 py-3 font-display text-wt-lime transition hover:bg-wt-lime hover:text-wt-ink"
+                className="hidden rounded-full border-2 border-wt-lime px-7 py-3 font-display text-wt-lime transition hover:bg-wt-lime hover:text-wt-ink lg:block"
               >
                 Gerar meu background
               </a>
             </div>
+
+            <AvisoComputador />
           </div>
 
           <Orbita />
@@ -117,7 +120,8 @@ export default function HomePage() {
 // Toda a mágica está no CSS (classes orbita-* no index.css).
 function Orbita() {
   return (
-    <div className="orbita-cena mx-auto" aria-hidden="true">
+    // order-first: no celular a animação vem antes do texto de boas-vindas
+    <div className="orbita-cena order-first mx-auto lg:order-none" aria-hidden="true">
       {SIMBOLOS.map((simbolo) => (
         <span
           key={simbolo.texto}

@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import AvisoComputador from './components/AvisoComputador.jsx'
 import Controls from './components/Controls.jsx'
 import ExportPanel from './components/ExportPanel.jsx'
 import Footer from './components/Footer.jsx'
@@ -32,7 +33,10 @@ export default function App() {
       <Navbar pagina="gerador" />
       <Header etiqueta="Workshop de Web Fundamentos" titulo="Gerador de Backgrounds" />
 
-      <main className="grid gap-6 lg:grid-cols-[1fr_420px] lg:items-start 2xl:grid-cols-[1fr_480px] 2xl:gap-10">
+      {/* O gerador é feito para computador: em telas pequenas só aparece este aviso */}
+      <AvisoComputador />
+
+      <main className="hidden gap-6 lg:grid lg:grid-cols-[1fr_420px] lg:items-start 2xl:grid-cols-[1fr_480px] 2xl:gap-10">
         <div className="flex flex-col gap-6">
           <HeroPreview
             svg={svg}

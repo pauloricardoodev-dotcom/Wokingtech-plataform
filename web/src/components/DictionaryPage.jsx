@@ -206,24 +206,58 @@ function Section({ secao }) {
   )
 }
 
+// No celular o card começa fechado (só nome e tipo) e abre ao tocar.
+// A partir de telas "sm" ele fica sempre aberto.
 function Card({ item, cor }) {
+  const [aberto, setAberto] = useState(false)
   const numero = String(item.numero).padStart(2, '0')
 
   return (
-    <article className={`flex flex-col gap-2 rounded-xl border border-l-4 border-wt-line bg-wt-panel p-4 ${cor.borda}`}>
-      <div className="flex items-start justify-between gap-3">
-        <h4 className="flex items-baseline gap-2 font-mono text-lg font-bold break-all">
+    // min-w-0: sem isso, o código comprido "empurra" a grade e cria rolagem para o lado
+    <article className={`flex min-w-0 flex-col gap-2 rounded-xl border border-l-4 border-wt-line bg-wt-panel p-4 ${cor.borda}`}>
+      <button
+        type="button"
+        onClick={() => setAberto(!aberto)}
+        // aria-expanded avisa aos leitores de tela se o card está aberto
+        aria-expanded={aberto}
+        className="flex items-start justify-between gap-3 text-left sm:pointer-events-none"
+      >
+        <h4 className="flex min-w-0 items-baseline gap-2 font-mono text-lg font-bold break-all">
           <span className={`rounded px-1.5 py-0.5 text-xs text-wt-ink ${cor.fundo}`}>#{numero}</span>
           <span className={cor.texto}>{item.nome}</span>
         </h4>
-        <span className="shrink-0 rounded-full border border-wt-line px-2 py-0.5 text-[11px] tracking-wide text-wt-muted uppercase">
-          {item.tipo}
+        <span className="flex shrink-0 items-center gap-2">
+          <span className="rounded-full border border-wt-line px-2 py-0.5 text-[11px] tracking-wide text-wt-muted uppercase">
+            {item.tipo}
+          </span>
+          <SetaIcon aberto={aberto} />
         </span>
+      </button>
+
+      <div className={`${aberto ? 'flex' : 'hidden'} min-w-0 flex-1 flex-col gap-2 sm:flex`}>
+        <p className="text-sm text-wt-paper/90">{item.desc}</p>
+        <pre className="mt-auto overflow-x-auto rounded-lg bg-wt-ink p-3 text-[13px] leading-relaxed text-wt-paper">
+          <code>{item.exemplo}</code>
+        </pre>
       </div>
-      <p className="text-sm text-wt-paper/90">{item.desc}</p>
-      <pre className="mt-auto overflow-x-auto rounded-lg bg-wt-ink p-3 text-[13px] leading-relaxed text-wt-paper">
-        <code>{item.exemplo}</code>
-      </pre>
     </article>
+  )
+}
+
+// Setinha que gira quando o card abre (só aparece no celular).
+function SetaIcon({ aberto }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className={`size-5 text-wt-muted transition sm:hidden ${aberto ? 'rotate-180' : ''}`}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m6 9 6 6 6-6" />
+    </svg>
   )
 }

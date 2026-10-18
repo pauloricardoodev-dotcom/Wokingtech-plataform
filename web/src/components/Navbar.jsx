@@ -4,8 +4,12 @@
 const PAGINAS = [
   { id: 'inicio', nome: 'Início', href: '/' },
   { id: 'dicionario', nome: 'Dicionário de códigos', href: '/dicionario.html' },
-  { id: 'gerador', nome: 'Gerador de Backgrounds', href: '/gerador.html' },
+  // soDesktop: o link some em telas pequenas (o gerador é feito para computador)
+  { id: 'gerador', nome: 'Gerador de Backgrounds', href: '/gerador.html', soDesktop: true },
 ]
+
+// Mesmo PDF do botão "Baixar em PDF" da página do dicionário
+const PDF_URL = '/assets/Dicionario-dos-Web-Fundamentos.pdf'
 
 const GITHUB_URL = 'https://github.com/PaulinDevendo/Workingtech-2026'
 
@@ -21,7 +25,7 @@ export default function Navbar({ pagina }) {
           {PAGINAS.map((item) => {
             const ativa = item.id === pagina
             return (
-              <li key={item.id}>
+              <li key={item.id} className={item.soDesktop ? 'hidden lg:block' : undefined}>
                 <a
                   href={item.href}
                   // aria-current avisa aos leitores de tela qual é a página atual
@@ -41,13 +45,18 @@ export default function Navbar({ pagina }) {
 
       <div className="flex flex-wrap gap-2">
         {/* O zip fica em public/assets: o atributo download faz o navegador baixar em vez de abrir */}
-        <a href="/assets/img.zip" download="assets-workshop.zip" className={BOTAO}>
+        {/* Os assets são para o gerador (só no computador): no celular, o botão vira o download do dicionário */}
+        <a href="/assets/img.zip" download="assets-workshop.zip" className={`hidden lg:flex ${BOTAO}`}>
           <DownloadIcon />
           Baixar assets
         </a>
+        <a href={PDF_URL} download="Dicionario-dos-Web-Fundamentos.pdf" className={`flex lg:hidden ${BOTAO}`}>
+          <DownloadIcon />
+          Dicionário
+        </a>
 
         {/* Código do workshop: target="_blank" abre em nova aba, rel="noopener" por segurança */}
-        <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className={BOTAO}>
+        <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className={`flex ${BOTAO}`}>
           <GithubIcon />
           GitHub
         </a>
@@ -56,8 +65,9 @@ export default function Navbar({ pagina }) {
   )
 }
 
+// Sem "flex" aqui: cada botão escolhe se aparece (flex) ou some (hidden) em cada tamanho de tela
 const BOTAO =
-  'flex items-center gap-2 rounded-full border-2 border-wt-lime px-4 py-2 font-display text-sm text-wt-lime transition hover:bg-wt-lime hover:text-wt-ink'
+  'items-center gap-2 rounded-full border-2 border-wt-lime px-4 py-2 font-display text-sm text-wt-lime transition hover:bg-wt-lime hover:text-wt-ink'
 
 // Ícones em SVG direto no código (sem biblioteca de ícones).
 // currentColor faz o ícone usar a mesma cor do texto do botão.
