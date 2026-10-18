@@ -1,8 +1,10 @@
 import { useMemo, useState } from 'react'
 import Controls from './components/Controls.jsx'
 import ExportPanel from './components/ExportPanel.jsx'
+import Footer from './components/Footer.jsx'
 import Header from './components/Header.jsx'
 import HeroPreview from './components/HeroPreview.jsx'
+import Navbar from './components/Navbar.jsx'
 import { DEFAULT_CONFIG, generate } from './lib/generate.js'
 import { makePalette } from './lib/palette.js'
 import { newSeed } from './lib/random.js'
@@ -27,7 +29,8 @@ export default function App() {
   return (
     // Ocupa a largura toda da tela (só com uma margem nas laterais).
     <div className="flex min-h-screen w-full flex-col gap-6 px-6 py-6 lg:px-10 lg:py-8 2xl:px-16">
-      <Header />
+      <Navbar pagina="gerador" />
+      <Header etiqueta="Workshop de Web Fundamentos" titulo="Gerador de Backgrounds" />
 
       <main className="grid gap-6 lg:grid-cols-[1fr_420px] lg:items-start 2xl:grid-cols-[1fr_480px] 2xl:gap-10">
         <div className="flex flex-col gap-6">
@@ -46,10 +49,7 @@ export default function App() {
         </div>
       </main>
 
-      <footer className="mt-auto pt-4 text-center text-sm text-wt-muted">
-        <p>Workshop de Web Fundamentos · Work in Tech</p>
-        <p>Feito por Paulo Ricardo Rinaldi da Silva</p>
-      </footer>
+      <Footer />
     </div>
   )
 }

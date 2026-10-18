@@ -9,6 +9,11 @@
   --color-wt-paper: #f9f6ff;
   --color-wt-muted: #b9aecb;
 
+  /* Cores das linguagens no dicionário (as mesmas do PDF) */
+  --color-lang-html: #f06a3f;
+  --color-lang-css: #5b8cff;
+  --color-lang-js: #f7df1e;
+
   --font-display: "Archivo Black", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
 }
@@ -35,6 +40,185 @@ body {
 }
 .no-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+/* ===== Página inicial: animações ===== */
+
+/* Entrada: o elemento sobe aparecendo. --atraso controla quando ele começa. */
+.entrar {
+  opacity: 0;
+  animation: entrar 0.7s ease-out forwards;
+  animation-delay: var(--atraso, 0s);
+}
+
+@keyframes entrar {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* A cena da órbita: um quadrado com tudo posicionado a partir do centro */
+.orbita-cena {
+  --tamanho: 420px;
+  --raio: 160px;
+  --volta: 18s; /* tempo de uma volta completa */
+  position: relative;
+  width: var(--tamanho);
+  height: var(--tamanho);
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .orbita-cena {
+    --tamanho: 300px;
+    --raio: 112px;
+  }
+}
+
+/* Anel tracejado por onde os ícones passam */
+.orbita-anel {
+  position: absolute;
+  inset: calc(50% - var(--raio));
+  border: 2px dashed #ffffff26;
+  border-radius: 50%;
+  animation: girar 60s linear infinite reverse;
+}
+
+/* O "</>" no meio, com um brilho lime pulsando */
+.orbita-centro {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 110px;
+  height: 110px;
+  margin: -55px;
+  border-radius: 50%;
+  background: var(--color-wt-panel);
+  border: 2px solid var(--color-wt-lime);
+  color: var(--color-wt-lime);
+  font-family: var(--font-display);
+  font-size: 30px;
+  animation: pulsar 2.4s ease-in-out infinite;
+}
+
+@keyframes pulsar {
+  0%,
+  100% {
+    box-shadow: 0 0 20px #c1ff7233;
+  }
+  50% {
+    box-shadow: 0 0 50px #c1ff7288;
+  }
+}
+
+/* O trilho gira e leva os ícones junto */
+.orbita-trilho {
+  position: absolute;
+  inset: 0;
+  animation: girar var(--volta) linear infinite;
+}
+
+/* Cada ícone vai para a borda do círculo: gira até o ângulo dele e anda o raio para fora.
+   O último rotate desfaz o giro, para o ícone começar "em pé". */
+.orbita-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 96px;
+  height: 96px;
+  margin: -48px;
+  transform: rotate(var(--angulo)) translateX(var(--raio)) rotate(calc(-1 * var(--angulo)));
+}
+
+/* O ícone gira ao contrário do trilho, na mesma velocidade: assim ele nunca fica de cabeça para baixo */
+.orbita-icone {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-wt-panel);
+  border: 2px solid currentColor;
+  animation: girar var(--volta) linear infinite reverse;
+}
+
+.orbita-icone svg {
+  width: 60%;
+  height: 60%;
+  animation: flutuar 3s ease-in-out infinite;
+}
+
+.orbita-icone-html {
+  color: #e34f26;
+  box-shadow: 0 0 36px #e34f2666;
+}
+.orbita-icone-css {
+  color: #2965f1;
+  box-shadow: 0 0 36px #2965f166;
+}
+.orbita-icone-js {
+  color: #f7df1e;
+  box-shadow: 0 0 36px #f7df1e55;
+}
+
+/* Símbolos de código piscando no fundo */
+.orbita-simbolo {
+  position: absolute;
+  font-family: ui-monospace, monospace;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--color-wt-muted);
+  opacity: 0;
+  animation: piscar 3.2s ease-in-out infinite;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes flutuar {
+  0%,
+  100% {
+    transform: translateY(-4px);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+}
+
+@keyframes piscar {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+}
+
+/* Quem prefere menos movimento (configuração do sistema) vê tudo parado */
+@media (prefers-reduced-motion: reduce) {
+  .entrar,
+  .orbita-anel,
+  .orbita-centro,
+  .orbita-trilho,
+  .orbita-icone,
+  .orbita-icone svg,
+  .orbita-simbolo {
+    animation: none;
+    opacity: 1;
+  }
 }
 
 /* Slider de cor: a trilha mostra o arco-íris de matizes */
